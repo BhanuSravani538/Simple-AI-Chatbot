@@ -29,6 +29,9 @@ if (!basePath) {
 
 export default defineConfig({
   base: basePath,
+  // The project URL and anon key are public Supabase client credentials.
+  // Never expose Supabase service-role keys through Vite.
+  envPrefix: ['VITE_', 'SUPABASE_URL', 'SUPABASE_ANON', 'ANON_API_KEY'],
   plugins: [
     react(),
     tailwindcss(),

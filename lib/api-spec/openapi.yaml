@@ -19,6 +19,8 @@ paths:
       tags: [chat]
       summary: Send a message to the chatbot
       description: Sends the current conversation history and returns an AI reply.
+      security:
+        - SupabaseBearerAuth: []
       requestBody:
         required: true
         content:
@@ -34,6 +36,12 @@ paths:
                 $ref: "#/components/schemas/ChatReply"
         "400":
           description: Invalid chat input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "401":
+          description: A valid Supabase session is required
           content:
             application/json:
               schema:
@@ -58,6 +66,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
 components:
+  securitySchemes:
+    SupabaseBearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     ChatMessage:
       type: object
